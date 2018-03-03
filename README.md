@@ -1,4 +1,11 @@
-# detection
+<img src=screenshots/starwars_small.gif width=100% />
+
+# Custom Object Detection with TensorFlow
+Object detection allows for the recognition, detection, and localization of multiple objects within an image. It provides us a much better understanding of an image as a whole as apposed to just visual recognition.
+
+**Why Object Detection?**
+![](https://cdn-images-1.medium.com/max/1600/1*uCdxGFAuHpEwCmZ3iOIUaw.png)
+
 ## Installation
 
 First, with python and pip installed, install the scripts requirements:
@@ -10,11 +17,6 @@ Then you must compile the Protobuf libraries:
 
 ```bash
 protoc object_detection/protos/*.proto --python_out=.
-```
-
-Copy files from data repo to root of this repo
-```
-cp -R ../data/train/* .
 ```
 
 Add `models` and `models/slim` to your `PYTHONPATH`:
@@ -43,6 +45,8 @@ You can find models to download from this [model zoo](https://github.com/bourdak
 
 Extract the files and move all the `model.ckpt` to our models directory.
 
+>_**Note:** If you don't use `faster_rcnn_resnet101_coco`, replace `faster_rcnn_resnet101.config` with the corresponding [config file](https://github.com/bourdakos1/Custom-Object-Detection/tree/master/object_detection/samples/configs)._
+
 ### 3) Train the Model
 Run the following script to train the model:
 
@@ -56,6 +60,7 @@ python object_detection/train.py \
 ### 4) Export the Inference Graph
 When you model is ready depends on your training data, the more data, the more steps you’ll need. My model was pretty solid at ~4.5k steps. Then, at about ~20k steps, it peaked. I even went on and trained it for 200k steps, but it didn’t get any better.
 
+>_**Note:** If training takes way to long, [read this](https://medium.freecodecamp.org/tracking-the-millenium-falcon-with-tensorflow-c8c86419225e)._
 
 I recommend testing your model every ~5k steps to make sure you’re on the right path.
 
@@ -84,3 +89,14 @@ Just run the following command:
 ```bash
 python object_detection/object_detection_runner.py
 ```
+
+It will run your object detection model found at `output_inference_graph/frozen_inference_graph.pb` on all the images in the `test_images` directory and output the results in the `output/test_images` directory.
+
+## Results
+Here’s what I got from running my model over all the frames in this clip from Star Wars: The Force Awakens.
+
+[![Watch the video](screenshots/youtube.png)](https://www.youtube.com/watch?v=xW2hpkoaIiM)
+
+## License
+
+[MIT](LICENSE)

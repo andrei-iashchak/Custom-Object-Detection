@@ -20,7 +20,7 @@ from utils import label_map_util
 from multiprocessing.dummy import Pool as ThreadPool
 
 MAX_NUMBER_OF_BOXES = 10
-MINIMUM_CONFIDENCE = 0.9
+MINIMUM_CONFIDENCE = 0.6
 
 PATH_TO_LABELS = 'annotations/label_map.pbtxt'
 PATH_TO_TEST_IMAGES_DIR = 'test_images'
@@ -44,7 +44,7 @@ def detect_objects(image_path):
     image_np_expanded = np.expand_dims(image_np, axis=0)
 
     (boxes, scores, classes, num) = sess.run([detection_boxes, detection_scores, detection_classes, num_detections], feed_dict={image_tensor: image_np_expanded})
-
+    print(classes, scores)
     vis_util.visualize_boxes_and_labels_on_image_array(
         image_np,
         np.squeeze(boxes),
@@ -86,5 +86,7 @@ with detection_graph.as_default():
         detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
         num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
+        # @NOTE: Can be moved to left and became executes on flask hook
         for image_path in TEST_IMAGE_PATHS:
+            print(image_path)
             detect_objects(image_path)

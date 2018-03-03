@@ -102,3 +102,11 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+annotations/
+images/
+models/
+output/
+test-images/
+train/
+model.ckpt-*
