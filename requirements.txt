@@ -1,3 +1,4 @@
 pillow
 lxml
 matplotlib
+flask
