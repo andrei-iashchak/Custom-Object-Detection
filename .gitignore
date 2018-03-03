@@ -109,4 +109,3 @@ models/
 output/
 test-images/
 train/
-model.ckpt-*
