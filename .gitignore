@@ -103,9 +103,9 @@ ENV/
 # mypy
 .mypy_cache/
 
-annotations/
-images/
-models/
-output/
-test-images/
-train/
+./annotations/
+./images/
+./models/
+./output/
+./test-images/
+./train/
