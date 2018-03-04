@@ -1,4 +1,4 @@
-import urllib, cStringIO
+import urllib
 import numpy as np
 import os
 import six.moves.urllib as urllib
@@ -13,22 +13,17 @@ import glob
 from io import StringIO
 from PIL import Image
 
-from utils import label_map_util
-
 from flask import Flask
-from app import app
+from flask import request
+from flask import jsonify
+
+import requests
+from io import BytesIO
 
 from multiprocessing.dummy import Pool as ThreadPool
 
 MAX_NUMBER_OF_BOXES = 10
 MINIMUM_CONFIDENCE = 0.6
-
-PATH_TO_LABELS = 'annotations/label_map.pbtxt'
-PATH_TO_TEST_IMAGES_DIR = 'test_images'
-
-label_map = label_map_util.load_labelmap(PATH_TO_LABELS)
-categories = label_map_util.convert_label_map_to_categories(label_map, max_num_classes=sys.maxsize, use_display_name=True)
-CATEGORY_INDEX = label_map_util.create_category_index(categories)
 
 # Path to frozen detection graph. This is the actual model that is used for the object detection.
 MODEL_NAME = 'output_inference_graph'
@@ -36,8 +31,10 @@ PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 
 
 def load_image_from_url(URL):
-    file = cStringIO.StringIO(urllib.urlopen(URL).read())
-    return Image.open(file)
+    type(URL)
+    response = requests.get(URL)
+    type(response)
+    return Image.open(StringIO(response.content))
 
 def load_image_into_numpy_array(image):
     (im_width, im_height) = image.size
@@ -73,8 +70,13 @@ with detection_graph.as_default():
         detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
         num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
-        # @NOTE: Can be moved to left and became executes on flask hook
-        @app.route('/')
-        def index():
-            image_path = request.args.get('image')
-            return detect_objects(image_path)
+# @NOTE: Can be moved to left and became executes on flask hook
+app = Flask(__name__)
+print('flask app initialized...')
+@app.route('/')
+def index():
+    image_path = request.args.get('image')
+    print(image_path)
+    type(image_path)
+    result = detect_objects(image_path)
+    return jsonify(result)
