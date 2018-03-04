@@ -16,4 +16,7 @@ COPY . ./
 
 EXPOSE 5000
 
-ENTRYPOINT ["sh", "/app/start.sh"]
+ENV PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+ENV FLASK_APP=server.py
+
+CMD ["flask", "run", "--host=0.0.0.0"]

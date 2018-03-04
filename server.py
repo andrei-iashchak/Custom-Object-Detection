@@ -16,8 +16,11 @@ import matplotlib.pyplot as plt
 
 from flask import Flask
 from flask import request
+from flask import jsonify
 
 from multiprocessing.dummy import Pool as ThreadPool
+
+app = Flask(__name__)
 
 MAX_NUMBER_OF_BOXES = 10
 MINIMUM_CONFIDENCE = 0.6
@@ -57,11 +60,9 @@ with detection_graph.as_default():
         detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
         num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
-        app = Flask(__name__)
-        print('flask app initialized...')
-        @app.route('/')
-        def index():
-            image_path = request.args.get('image')
-            return image_path
-            # print(image_path)
-            # return detect_objects(image_path)
+@app.route('/')
+def index():
+    image_path = request.args.get('image')
+    print(image_path)
+    return image_path
+    # return jsonify(detect_objects(image_path))
