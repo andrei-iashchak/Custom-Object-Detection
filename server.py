@@ -1,7 +1,6 @@
 import urllib
 import numpy as np
 import os
-import six.moves.urllib as urllib
 import sys
 import tarfile
 import tensorflow as tf
@@ -31,7 +30,8 @@ PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 
 
 def load_image_from_url(URL):
-    resp = urllib.urlopen(URL)
+    s = url.read()
+    resp = urllib.request.urlopen(URL)
     return np.asarray(bytearray(resp.read()), dtype="uint8")
 
 def load_image_into_numpy_array(image):
