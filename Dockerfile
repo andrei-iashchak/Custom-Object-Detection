@@ -4,7 +4,7 @@ MAINTAINER andrey@yashchak.ru
 RUN mkdir -p /app
 WORKDIR /app
 
-COPY . ./requirements.txt
+COPY requirements.txt ./
 
 RUN pip install -r requirements.txt
 
