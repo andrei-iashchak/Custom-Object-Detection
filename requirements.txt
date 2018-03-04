@@ -2,3 +2,4 @@ pillow
 lxml
 matplotlib
 flask
+scikit-image

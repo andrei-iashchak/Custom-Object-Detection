@@ -31,10 +31,8 @@ PATH_TO_CKPT = MODEL_NAME + '/frozen_inference_graph.pb'
 
 
 def load_image_from_url(URL):
-    type(URL)
-    response = requests.get(URL)
-    type(response)
-    return Image.open(StringIO(response.content))
+    resp = urllib.urlopen(URL)
+    return np.asarray(bytearray(resp.read()), dtype="uint8")
 
 def load_image_into_numpy_array(image):
     (im_width, im_height) = image.size
@@ -42,8 +40,7 @@ def load_image_into_numpy_array(image):
         (im_height, im_width, 3)).astype(np.uint8)
 
 def detect_objects(image_url):
-    image = load_image_from_url(image_url)
-    image_np = load_image_into_numpy_array(image)
+    image_np = load_image_from_url(image_url)
     image_np_expanded = np.expand_dims(image_np, axis=0)
 
     return sess.run([detection_boxes, detection_scores, detection_classes, num_detections], feed_dict={image_tensor: image_np_expanded})
@@ -77,6 +74,6 @@ print('flask app initialized...')
 def index():
     image_path = request.args.get('image')
     print(image_path)
-    type(image_path)
+    print(type(image_path))
     result = detect_objects(image_path)
     return jsonify(result)
