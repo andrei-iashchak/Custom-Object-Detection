@@ -57,11 +57,11 @@ with detection_graph.as_default():
         detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
         num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
-app = Flask(__name__)
-print('flask app initialized...')
-@app.route('/')
-def index():
-    image_path = request.args.get('image')
-    return image_path
-    # print(image_path)
-    # return detect_objects(image_path)
+        app = Flask(__name__)
+        print('flask app initialized...')
+        @app.route('/')
+        def index():
+            image_path = request.args.get('image')
+            return image_path
+            # print(image_path)
+            # return detect_objects(image_path)

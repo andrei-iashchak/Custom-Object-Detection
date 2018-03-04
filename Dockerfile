@@ -1,4 +1,4 @@
-FROM tensorflow/tensorflow
+FROM python:3
 MAINTAINER andrey@yashchak.ru
 
 RUN mkdir -p /app
