@@ -66,3 +66,7 @@ def index():
             print(image_path)
             return image_path
     # return jsonify(detect_objects(image_path))
+
+
+app.debug = True
+app.run(host='0.0.0.0')
