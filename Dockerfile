@@ -5,7 +5,6 @@ RUN mkdir -p /app
 WORKDIR /app
 
 COPY requirements.txt ./
-RUN apt-get update && apt-get install python-matplotlib -y
 
 RUN pip install -r requirements.txt
 
