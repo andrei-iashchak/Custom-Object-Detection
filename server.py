@@ -51,18 +51,18 @@ with detection_graph.as_default():
         od_graph_def.ParseFromString(serialized_graph)
         tf.import_graph_def(od_graph_def, name='')
 
-print('detecting...')
-with detection_graph.as_default():
-    with tf.Session(graph=detection_graph) as sess:
-        image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
-        detection_boxes = detection_graph.get_tensor_by_name('detection_boxes:0')
-        detection_scores = detection_graph.get_tensor_by_name('detection_scores:0')
-        detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
-        num_detections = detection_graph.get_tensor_by_name('num_detections:0')
-
 @app.route('/')
 def index():
-    image_path = request.args.get('image')
-    print(image_path)
-    return image_path
+    print('detecting...')
+    with detection_graph.as_default():
+        with tf.Session(graph=detection_graph) as sess:
+            image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
+            detection_boxes = detection_graph.get_tensor_by_name('detection_boxes:0')
+            detection_scores = detection_graph.get_tensor_by_name('detection_scores:0')
+            detection_classes = detection_graph.get_tensor_by_name('detection_classes:0')
+            num_detections = detection_graph.get_tensor_by_name('num_detections:0')
+
+            image_path = request.args.get('image')
+            print(image_path)
+            return image_path
     # return jsonify(detect_objects(image_path))
