@@ -18,4 +18,4 @@ EXPOSE 5000
 RUN protoc object_detection/protos/*.proto --python_out=.
 ENV PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
 
-CMD ["python", "server.py"]
+CMD ["python", "object_detection/server.py"]
