@@ -3,5 +3,13 @@ MAINTAINER andrey@yashchak.ru
 
 RUN mkdir -p /app
 WORKDIR /app
+
+COPY . ./requirements.txt
+
 RUN pip install -r requirements.txt
-RUN ls -la
+
+COPY . ./
+
+EXPOSE 5000
+
+ENTRYPOINT ["sh", "/app/start.sh"]

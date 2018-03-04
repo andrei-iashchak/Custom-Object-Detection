@@ -1,4 +1,4 @@
-python object_detection/train.py \
-        --logtostderr \
-        --train_dir=train \
-        --pipeline_config_path=faster_rcnn_resnet101.config
+#!/bin/bash
+export PYTHONPATH=$PYTHONPATH:`pwd`:`pwd`/slim
+export FLASK_APP=server.py
+flask run --host=0.0.0.0
